@@ -33,11 +33,11 @@ namespace ToDoApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> FindByIdAsync([FromRoute] int id)
+        public async Task<ActionResult<ReadJobDTO>> FindByIdAsync([FromRoute] int id)
         {
             Job? job = await _services.FindByIdAsync(id);
             if (job == null) return BadRequest("Requested data not found");
-            return Ok(job);
+            return Ok(_mapping.ToReadJobDTO(job));
         }
 
         [HttpPost]
@@ -74,6 +74,17 @@ namespace ToDoApp.Controllers
             if (job == null || string.IsNullOrEmpty(job.ImageName)) return BadRequest("Job not found");
             await _imageServices.UpdateAsync(updateImageDto.Image!, job.ImageName!);
             return Ok("Image updated");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            Job? job = await _services.FindByIdAsync(id);
+            if(job == null) return BadRequest("Entity not found");
+            bool result = await _services.DeleteAsync(job);
+            if (!result) return BadRequest("Entity not deleted");
+            return Ok("Entity deleted");
+
         }
     }
 }

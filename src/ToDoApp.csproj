@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Images\Jobs\" />
     <Folder Include="Data\Images\Users\" />
   </ItemGroup>
 

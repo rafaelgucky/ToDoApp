@@ -22,6 +22,7 @@ builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<ImageServices>();
 
 builder.Services.AddScoped<JobMapping>();
+builder.Services.AddScoped<CategoryMapping>();
 
 var app = builder.Build();
 

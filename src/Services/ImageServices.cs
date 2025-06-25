@@ -33,8 +33,21 @@ namespace ToDoApp.Services
 
         public async Task<byte[]?> FindFileByNameAsync(string imageName)
         {
-            if (!File.Exists(Path.Combine(_path, imageName))) return null;
-            byte[] bytes =  await File.ReadAllBytesAsync(Path.Combine(_path, imageName));
+            string path = string.Empty;
+
+            if (File.Exists(Path.Combine(_path + "Users/", imageName)))
+            {
+                path = Path.Combine(_path + "Users/", imageName);
+            }
+            else if(File.Exists(Path.Combine(_path + "Jobs/", imageName)))
+            {
+                path = Path.Combine(_path + "Jobs/", imageName);
+            }
+            else
+            {
+                return null;
+            }
+            byte[] bytes = await File.ReadAllBytesAsync(path);
             return bytes;
         }
 
