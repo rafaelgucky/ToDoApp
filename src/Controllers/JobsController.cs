@@ -65,5 +65,15 @@ namespace ToDoApp.Controllers
             }
             return Created("api/jobs", saveJob);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateImageAsync(UpdateImageJobDTO updateImageDto)
+        {
+            if (updateImageDto == null) return BadRequest();
+            Job? job = await _services.FindByIdAsync(updateImageDto!.Id);
+            if (job == null || string.IsNullOrEmpty(job.ImageName)) return BadRequest("Job not found");
+            await _imageServices.UpdateAsync(updateImageDto.Image!, job.ImageName!);
+            return Ok("Image updated");
+        }
     }
 }

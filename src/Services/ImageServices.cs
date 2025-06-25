@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ToDoApp.Data;
 using ToDoApp.Models;
 
@@ -35,6 +36,24 @@ namespace ToDoApp.Services
             if (!File.Exists(Path.Combine(_path, imageName))) return null;
             byte[] bytes =  await File.ReadAllBytesAsync(Path.Combine(_path, imageName));
             return bytes;
+        }
+
+        public async Task UpdateAsync(IFormFile file, string name)
+        {
+            string path = string.Empty;
+
+            if(File.Exists(_path + "Users/" + name))
+            {
+                path = _path + "Users/" + name;
+            }
+            else
+            {
+                path = _path + "Jobs/" + name;
+            }
+            using (FileStream newFile = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(newFile);
+            }
         }
 
         public bool IsValidExtension(IFormFile file, IEnumerable<string> extensions)

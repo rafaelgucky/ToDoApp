@@ -81,5 +81,13 @@ namespace ToDoApp.Mapping
                 CategoryId = updateDto.CategoryId
             };
         }
+
+        public Job ToJob(UpdateImageJobDTO updateImageDto)
+        {
+            return new Job
+            {
+                Id = updateImageDto.Id
+            };
+        }
     }
 }
