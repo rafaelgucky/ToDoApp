@@ -13,8 +13,8 @@ namespace ToDoApp.Models
         [Required, StringLength(1024)]
         public string Description { get; set; } = string.Empty;
 
-        [Required, StringLength(50)]
-        public string HexadecimalColor { get; set; } = string.Empty;
+        [StringLength(50)]
+        public string? HexadecimalColor { get; set; }
 
         public List<Job>? Jobs { get; set; }
 

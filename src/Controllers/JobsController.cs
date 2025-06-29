@@ -43,16 +43,12 @@ namespace ToDoApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Job>> Create([FromForm] CreateJobDTO job)
         {
-            string imageName = string.Empty;
-            List<string> validExtensions = new List<string> 
-            { 
-                "png", "jpg", "jpeg"
-            };
+            string? imageName = string.Empty;
 
             if(job.Image != null)
             {
-                if(!_imageServices.IsValidExtension(job.Image, validExtensions)) return BadRequest("Invalid data type");
-                imageName = await _imageServices.SaveImage(job.Image);
+                imageName = await _imageServices.SaveImage(job.Image, typeof(Job));
+                if (imageName == null) return BadRequest("Invalid data type");
             }
 
             Job saveJob = _mapping.ToJob(job);

@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using ToDoApp.Models;
 
-namespace ToDoApp.Models
+namespace ToDoApp.DTOs.UserDTOs
 {
-    public class User
+    public class ReadUserDTO
     {
         [Key]
         public string Id { get; set; } = string.Empty;
@@ -24,9 +23,7 @@ namespace ToDoApp.Models
         [Required, StringLength(256)]
         public string? ImageName { get; set; }
         public DateTime BirthDate { get; set; }
+        public int Age => (int)Math.Floor(DateTime.Now.Subtract(BirthDate).Days / 365.25);
 
-        [NotMapped]
-        public int Age { get; set; }
-        public List<Job>? Jobs { get; set; }
     }
 }

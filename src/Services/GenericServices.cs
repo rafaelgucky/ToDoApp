@@ -7,10 +7,12 @@ namespace ToDoApp.Services
     public class GenericServices
     {
         protected Context _context;
+        protected IConfiguration _configuration;
 
-        public GenericServices(Context context)
+        public GenericServices(Context context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public async Task<bool> CreateAsync<T>(T entity) where T : class

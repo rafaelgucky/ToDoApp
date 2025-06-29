@@ -6,7 +6,7 @@ namespace ToDoApp.Services
 {
     public class JobServices : GenericServices
     {
-        public JobServices(Context context) : base(context) { }
+        public JobServices(Context context, IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<Job?> FindByIdAsync(int id)
         {
