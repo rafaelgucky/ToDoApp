@@ -8,7 +8,7 @@ namespace ToDoApp.DTOs.UserDTOs
         [Key]
         public string Id { get; set; } = string.Empty;
 
-        [DataType(DataType.DateTime)]
+        [Required, DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }
     }
 }

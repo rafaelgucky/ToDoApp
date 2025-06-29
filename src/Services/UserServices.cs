@@ -29,6 +29,11 @@ namespace ToDoApp.Services
             return await _context.Users.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
+        public async Task<User?> FindByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task<User> CreateAsync(User user)
         {
             user.Password = EncryptPassword(user.Password);
@@ -51,7 +56,7 @@ namespace ToDoApp.Services
             User? user = await FindByIdAsync(update.Id);
             if (user == null) return false;
             _context.Entry(user).Property(p => p.Password).IsModified = true;
-            user.Password = EncryptPassword(update.Password);
+            user.Password = EncryptPassword(update.NewPassword);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -64,7 +69,13 @@ namespace ToDoApp.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public string EncryptPassword(string password)
+        public bool CkeckPassword(User user,  string password)
+        {
+            if (DecryptPassword(user.Password) == password) return true;
+            return false;
+        }
+
+        private string EncryptPassword(string password)
         {
             int counter = 0;
             string result = string.Empty;
@@ -96,7 +107,7 @@ namespace ToDoApp.Services
             return result;
         }
 
-        public string DecryptPassword(string encryptedPassword)
+        private string DecryptPassword(string encryptedPassword)
         {
             int counter = 0;
             string result = string.Empty;

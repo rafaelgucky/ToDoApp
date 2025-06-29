@@ -63,12 +63,27 @@ namespace ToDoApp.Controllers
         }
 
         [HttpPut]
+        public async Task<ActionResult> UpdateAsync(UpdateJobDTO update)
+        {
+            Job? job = await _services.UpdateAsync(_mapping.ToJob(update));
+            if (job == null) return BadRequest("Not updated");
+            return Ok(_mapping.ToReadJobDTO(job));
+        }
+
+        [HttpPut("image")]
         public async Task<ActionResult> UpdateImageAsync(UpdateImageJobDTO updateImageDto)
         {
             if (updateImageDto == null) return BadRequest();
             Job? job = await _services.FindByIdAsync(updateImageDto!.Id);
-            if (job == null || string.IsNullOrEmpty(job.ImageName)) return BadRequest("Job not found");
-            await _imageServices.UpdateAsync(updateImageDto.Image!, job.ImageName!);
+            if (job == null) return BadRequest("Job not found");
+            if(!string.IsNullOrEmpty(job.ImageName))
+            {
+                await _imageServices.UpdateAsync(updateImageDto.Image!, job.ImageName!);
+            }
+            else
+            {
+                await _imageServices.SaveImage(updateImageDto.Image!, typeof(Job));
+            }
             return Ok("Image updated");
         }
 
@@ -77,6 +92,10 @@ namespace ToDoApp.Controllers
         {
             Job? job = await _services.FindByIdAsync(id);
             if(job == null) return BadRequest("Entity not found");
+            if(job.ImageName != null)
+            {
+                if(!_imageServices.Remove(job.ImageName, typeof(Job))) return BadRequest("Not deleted (ImageError)");
+            }
             bool result = await _services.DeleteAsync(job);
             if (!result) return BadRequest("Entity not deleted");
             return Ok("Entity deleted");

@@ -76,7 +76,7 @@ namespace ToDoApp.Mapping
             return new User
             {
                 Id = update.Id,
-                Password = update.Password
+                Password = update.NewPassword
             };
         }
     }

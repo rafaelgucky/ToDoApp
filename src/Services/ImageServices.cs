@@ -79,6 +79,20 @@ namespace ToDoApp.Services
             return true;
         }
 
+        public bool Remove(string imageName, Type entityType)
+        {
+            string path = _path + entityType.Name + "s/" + imageName;
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
         private bool IsValidExtension(IFormFile file, IEnumerable<string> extensions)
         {
             string fileExtension = GetExtension(file);

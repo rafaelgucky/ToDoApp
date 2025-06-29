@@ -9,6 +9,8 @@ namespace ToDoApp.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRoles> UserRoles { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options) { }
     }

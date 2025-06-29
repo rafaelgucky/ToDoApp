@@ -8,7 +8,7 @@ namespace ToDoApp.DTOs.UserDTOs
         [Key]
         public string Id { get; set; } = string.Empty;
 
-        [DataType(DataType.Upload)]
+        [Required, DataType(DataType.Upload)]
         public IFormFile? Image {  get; set; }
     }
 }

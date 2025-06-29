@@ -28,5 +28,8 @@ namespace ToDoApp.Models
         [NotMapped]
         public int Age { get; set; }
         public List<Job>? Jobs { get; set; }
+
+        [NotMapped]
+        public List<Role>? Roles { get; set; }
     }
 }

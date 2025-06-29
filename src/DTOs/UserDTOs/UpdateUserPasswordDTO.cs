@@ -9,6 +9,9 @@ namespace ToDoApp.DTOs.UserDTOs
         public string Id { get; set; } = string.Empty;
 
         [Required, StringLength(16)]
-        public string Password { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
+
+        [Required, StringLength(16)]
+        public string LastPassword { get; set; } = string.Empty;
     }
 }

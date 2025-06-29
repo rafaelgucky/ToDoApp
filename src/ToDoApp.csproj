@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -23,12 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Images\Users\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ExtensionClasses">
-      <HintPath>..\..\C-Sharp\Libraries\PrivateLibrary\bin\Release\net8.0\ExtensionClasses.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

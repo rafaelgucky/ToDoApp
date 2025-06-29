@@ -16,8 +16,6 @@ namespace ToDoApp.DTOs.JobDTOs
         public string Description { get; set; } = string.Empty;
         public DateTime FinalDate { get; set; }
 
-        public IFormFile? Image { get; set; }
-
         [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
     }

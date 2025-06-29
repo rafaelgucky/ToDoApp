@@ -21,6 +21,8 @@ builder.Services.AddScoped<JobServices>();
 builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<ImageServices>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<RoleServices>();
+builder.Services.AddScoped<TokenServices>();
 
 builder.Services.AddScoped<JobMapping>();
 builder.Services.AddScoped<CategoryMapping>();
