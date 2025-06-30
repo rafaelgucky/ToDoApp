@@ -9,5 +9,8 @@ namespace ToDoApp.DTOs.CategoryDTOs
 
         [Required, StringLength(1024)]
         public string Description { get; set; } = string.Empty;
+
+        [Required]
+        public string UserId { get; set; } = string.Empty;
     }
 }

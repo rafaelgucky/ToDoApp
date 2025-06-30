@@ -32,5 +32,13 @@ namespace ToDoApp.Controllers
             if (!_userServices.CkeckPassword(user, login.Password)) return BadRequest("Wrong password");
             return Ok(_tokenServices.CreateToken(user));
         }
+
+        [HttpPost("logout")]
+        public async Task<ActionResult> LogoutAsync()
+        {
+            bool result = await _tokenServices.Logout(Request.Headers.Authorization.ToString());
+            if (!result) return BadRequest("Error");
+            return Ok();
+        }
     }
 }

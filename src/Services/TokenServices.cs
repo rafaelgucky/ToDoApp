@@ -35,9 +35,20 @@ namespace ToDoApp.Services
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey")!)),
                 SecurityAlgorithms.HmacSha256Signature),
                 Subject = claims,
-                Expires = DateTime.UtcNow.AddMinutes(_configuration.GetSection("JWT").GetValue<int>("Expires"))
+                Expires = DateTime.UtcNow.AddMinutes(_configuration.GetSection("JWT").GetValue<int>("Expires")),
+                Audience = "https://seusistema.com",
+                Issuer = "https://seudominio.com"
             };
             return handler.WriteToken(handler.CreateToken(securityTokenDescriptor));
+        }
+
+        public async Task<bool> Logout(string token)
+        {
+            _context.InvakidTokens.Add(new InvalidToken
+            {
+                Token = token.Replace("Bearer ", "")
+            });
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

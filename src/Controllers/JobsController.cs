@@ -24,15 +24,15 @@ namespace ToDoApp.Controllers
             _imageServices = imageServices;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReadJobDTO>>> Index([FromQuery] int pageNumber, [FromQuery] int pageSize)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<ReadJobDTO>>> FindAllAsync([FromRoute] string userId, [FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
-            IEnumerable<Job>? jobs = await _services.FindAllAsync<Job>(pageNumber, pageSize);
+            IEnumerable<Job>? jobs = await _services.FindAllAsync(userId, pageNumber, pageSize);
             if(jobs != null) return Ok(_mapping.ToReadJobDTO(jobs));
             return Ok();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<ReadJobDTO>> FindByIdAsync([FromRoute] int id)
         {
             Job? job = await _services.FindByIdAsync(id);
@@ -41,7 +41,7 @@ namespace ToDoApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Job>> Create([FromForm] CreateJobDTO job)
+        public async Task<ActionResult<Job>> CreateAsync([FromForm] CreateJobDTO job)
         {
             string? imageName = string.Empty;
 

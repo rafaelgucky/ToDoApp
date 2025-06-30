@@ -9,6 +9,15 @@ namespace ToDoApp.Services
     {
         public CategoryServices(Context context, IConfiguration configuration) : base(context, configuration) { }
 
+
+        public async Task<IEnumerable<Category>> FindAllAsync(string userId, int pageNumber, int pageSize)
+        {
+            return await _context.Categories
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+        }
         public async Task<Category?> FindByIdAsync(int id)
         {
             return await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);

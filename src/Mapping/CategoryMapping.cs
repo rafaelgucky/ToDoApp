@@ -42,7 +42,8 @@ namespace ToDoApp.Mapping
             return new Category
             {
                 Name = create.Name,
-                Description = create.Description
+                Description = create.Description,
+                UserId = create.UserId
             };
         }
 

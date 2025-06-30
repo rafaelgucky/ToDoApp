@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.DTOs.CategoryDTOs;
@@ -10,6 +11,7 @@ namespace ToDoApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private CategoryServices _services;
@@ -20,13 +22,13 @@ namespace ToDoApp.Controllers
             _services = services;
             _mapping = mapping;
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReadCategoryDTO>>> FindAllAsync()
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<ReadCategoryDTO>>> FindAllAsync(string userId, int pageNumber, int pageSize)
         {
-            return Ok(_mapping.ToReadCategoryDto(await _services.FindAllAsync<Category>()));
+            return Ok(_mapping.ToReadCategoryDto(await _services.FindAllAsync(userId, pageNumber, pageSize)));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<ReadCategoryDTO?>> FindByIdAsync(int id)
         {
             Category? category = await _services.FindByIdAsync(id);

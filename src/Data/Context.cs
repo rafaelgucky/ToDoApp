@@ -11,6 +11,7 @@ namespace ToDoApp.Data
         public DbSet<Image> Images { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
+        public DbSet<InvalidToken> InvakidTokens { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options) { }
     }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDoApp.Models
 {
@@ -15,6 +16,11 @@ namespace ToDoApp.Models
 
         [StringLength(50)]
         public string? HexadecimalColor { get; set; }
+
+        [ForeignKey("UserId")]
+        public string UserId { get; set; } = string.Empty;
+
+        public User? User { get; set; }
 
         public List<Job>? Jobs { get; set; }
 
