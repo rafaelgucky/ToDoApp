@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.DTOs.UserDTOs;
 using ToDoApp.Mapping;
@@ -9,6 +10,7 @@ namespace ToDoApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly UserServices _services;
@@ -22,13 +24,13 @@ namespace ToDoApp.Controllers
             _mapping = mapping;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReadUserDTO>>> FindAllAsync()
-        {
-            IEnumerable<User>? users = await _services.FindAllAsync<User>();
-            if (users == null) return Ok();
-            return Ok(_mapping.ToReadUserDto(users));
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<ReadUserDTO>>> FindAllAsync()
+        //{
+        //    IEnumerable<User>? users = await _services.FindAllAsync<User>();
+        //    if (users == null) return Ok();
+        //    return Ok(_mapping.ToReadUserDto(users));
+        //}
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ReadUserDTO?>> FindByIdAsync(string id)

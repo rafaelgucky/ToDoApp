@@ -11,12 +11,8 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDoApp", Version = "v1" });
@@ -70,13 +66,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true, // Habilita validação do emissor
-        ValidateAudience = true, // Habilita validação do público
-        ValidateLifetime = true, // Verifica se o token expirou
-        ValidateIssuerSigningKey = true, // Verifica a chave de assinatura
+        ValidateIssuer = true, 
+        ValidateAudience = true, 
+        ValidateLifetime = true, 
+        ValidateIssuerSigningKey = true, 
 
-        ValidIssuer = "https://seudominio.com", // Ex: https://seudominio.com
-        ValidAudience = "https://seusistema.com", // Ex: https://seusistema.com
+        ValidIssuer = "https://seudominio.com", 
+        ValidAudience = "https://seusistema.com",
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.ASCII.GetBytes(builder.Configuration
             .GetValue<string>("SecretKey")!)),
@@ -93,6 +89,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
