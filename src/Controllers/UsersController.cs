@@ -52,7 +52,7 @@ namespace ToDoApp.Controllers
                 imageName = await _imageServices.SaveImage(create.Image, typeof(User));
                 if (imageName == null) return BadRequest("Invalid data type");
                 user.ImageName = imageName;
-                user.ImageUrl = $"https://localhost:5203/api/Images/{imageName}";
+                user.ImageUrl = $"https://{Request.Host}/api/Images/{imageName}";
             }
 
             User response = await _services.CreateAsync(user);

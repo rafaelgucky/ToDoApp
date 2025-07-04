@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SQLitePCL;
 using ToDoApp.DTOs.TokenDTO;
+using ToDoApp.DTOs.UserDTOs;
+using ToDoApp.Mapping;
 using ToDoApp.Models;
 using ToDoApp.Services;
 
@@ -12,14 +14,47 @@ namespace ToDoApp.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserServices _userServices;
+        private readonly UserMapping _mapping;
+        private readonly ImageServices _imageServices;
         private readonly TokenServices _tokenServices;
         private readonly RoleServices _roleServices;
 
-        public AuthController(UserServices userServices, TokenServices tokenServices, RoleServices roleServices)
+        public AuthController(UserServices userServices, TokenServices tokenServices, RoleServices roleServices, ImageServices imageServices, UserMapping mapping)
         {
             _userServices = userServices;
             _tokenServices = tokenServices;
             _roleServices = roleServices;
+            _imageServices = imageServices;
+            _mapping = mapping;
+        }
+
+        [HttpGet("info")]
+        public ActionResult Info()
+        {
+            return Ok(new
+            {
+                Request.Host,
+                Request.Path
+            });
+        }
+
+        [HttpPost("createaccount")]
+        public async Task<ActionResult> CreateAccount(CreateUserDTO create)
+        {
+            User user = _mapping.ToUser(create);
+            user.Id = Guid.NewGuid().ToString();
+            string? imageName = string.Empty;
+
+            if (create.Image != null)
+            {
+                imageName = await _imageServices.SaveImage(create.Image, typeof(User));
+                if (imageName == null) return BadRequest("Invalid data type");
+                user.ImageName = imageName;
+                user.ImageUrl = $"https://{Request.Host}/api/Images/{imageName}";
+            }
+
+            User response = await _userServices.CreateAsync(user);
+            return Created("api/auth", response);
         }
 
         [HttpPost("login")]

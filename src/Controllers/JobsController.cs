@@ -14,13 +14,11 @@ namespace ToDoApp.Controllers
     [Authorize]
     public class JobsController : ControllerBase
     {
-        private Context _context;
         private JobServices _services;
         private JobMapping _mapping;
         private ImageServices _imageServices;
         public JobsController(Context context, JobServices services, JobMapping mapping, ImageServices imageServices) 
         { 
-            _context = context;
             _services = services;
             _mapping = mapping;
             _imageServices = imageServices;
@@ -46,16 +44,16 @@ namespace ToDoApp.Controllers
         public async Task<ActionResult<Job>> CreateAsync([FromForm] CreateJobDTO job)
         {
             string? imageName = string.Empty;
+            Job saveJob = _mapping.ToJob(job);
 
-            if(job.Image != null)
+            if (job.Image != null)
             {
                 imageName = await _imageServices.SaveImage(job.Image, typeof(Job));
                 if (imageName == null) return BadRequest("Invalid data type");
+                
+                saveJob.ImageName = imageName;
+                saveJob.ImageUrl = $"https://{Request.Host}/api/Images/{imageName}"; ;
             }
-
-            Job saveJob = _mapping.ToJob(job);
-            saveJob.ImageName = imageName;
-            saveJob.ImageUrl = $"https://localhost:7010/api/Images/{imageName}";
 
             if (!await _services.CreateAsync(saveJob))
             {

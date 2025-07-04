@@ -59,13 +59,7 @@ namespace ToDoApp.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Images");
                 });
@@ -210,17 +204,6 @@ namespace ToDoApp.Migrations
                 });
 
             modelBuilder.Entity("ToDoApp.Models.Category", b =>
-                {
-                    b.HasOne("ToDoApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ToDoApp.Models.Image", b =>
                 {
                     b.HasOne("ToDoApp.Models.User", "User")
                         .WithMany()
