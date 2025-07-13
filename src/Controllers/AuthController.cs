@@ -18,14 +18,17 @@ namespace ToDoApp.Controllers
         private readonly ImageServices _imageServices;
         private readonly TokenServices _tokenServices;
         private readonly RoleServices _roleServices;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(UserServices userServices, TokenServices tokenServices, RoleServices roleServices, ImageServices imageServices, UserMapping mapping)
+        public AuthController(UserServices userServices, TokenServices tokenServices, 
+            RoleServices roleServices, ImageServices imageServices, UserMapping mapping, IConfiguration configuration)
         {
             _userServices = userServices;
             _tokenServices = tokenServices;
             _roleServices = roleServices;
             _imageServices = imageServices;
             _mapping = mapping;
+            _configuration = configuration;
         }
 
         [HttpGet("info")]
@@ -58,14 +61,19 @@ namespace ToDoApp.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> CreateToken(LoginDTO login)
+        public async Task<ActionResult> CreateToken(LoginDTO login)
         {
             User? user = await _userServices.FindByEmailAsync(login.Email);
             if (user == null) return BadRequest("User not found");
             var roles = await _roleServices.GetUserRoles(user.Id);
             user.Roles = roles.ToList();
             if (!_userServices.CkeckPassword(user, login.Password)) return BadRequest("Wrong password");
-            return Ok(_tokenServices.CreateToken(user));
+            return Ok(new
+            {
+                Token = _tokenServices.CreateToken(user),
+                UserId = user.Id,
+                Valid = DateTime.Now.AddMinutes(_configuration.GetSection("JWT").GetValue<int>("Expires"))
+            });
         }
 
         [HttpPost("logout")]

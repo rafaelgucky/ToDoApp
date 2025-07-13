@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -19,4 +18,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY ["./src/Data/ToDoAppDb.db", "./Data/ToDoAppDb.db"]
+# RUN chmod 666 "./Data/ToDoAppDb.db"
 ENTRYPOINT ["dotnet", "ToDoApp.dll"]

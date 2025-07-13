@@ -1,0 +1,54 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@using System.Net.Http.Headers
+@using ToDoApp.Entities.DTOs.CategoryDTOs;
+@using ToDoApp.Entities.DTOs.TokenDTO
+@inject HttpClient Http
+
+<h3>Login</h3>
+
+<input type="text" @bind="login.Email" placeholder="Email" />
+<input type="password" @bind="login.Password" placeholder="Password" />
+
+<button @onclick="SendLogin">Enviar</button>
+
+<p>@login.Email</p>
+<p>@login.Password</p>
+
+<p>Resposta: @resposta</p>
+@if(categories != null)
+{
+    foreach (var category in categories)
+    {
+        <p>@category.Name</p>
+    }
+}
+
+@code {
+    private LoginDTO login = new();
+    private string? resposta;
+    private IEnumerable<ReadCategoryDTO>? categories;
+
+    private async Task SendLogin()
+    {
+        var r = await Http.PostAsJsonAsync("api/auth/login", login);
+        
+        string token = await r.Content.ReadAsStringAsync();
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:3300/api/categories/1?pageNumber=1&pageSize=345");
+        
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            categories = await response.Content.ReadFromJsonAsync<IEnumerable<ReadCategoryDTO>>();
+            
+        }
+        else
+        {
+            resposta = response.StatusCode.ToString();
+        }
+
+    }
+}
