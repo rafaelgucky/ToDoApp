@@ -1,6 +1,6 @@
 # 📋 ToDo API
 
-API RESTful para gerenciamento de tarefas, com suporte à categorização. Ideal para uso em aplicações web ou mobile que requerem controle de tarefas simples e flexível.
+API para gerenciamento de tarefas, com suporte à categorização. Ideal para uso em aplicações web ou mobile que requerem controle de tarefas simples e flexível.
 
 ## 🚀 Funcionalidades
 
@@ -21,6 +21,8 @@ API RESTful para gerenciamento de tarefas, com suporte à categorização. Ideal
 
 ## 📦 Instalação
 
+### Requer a ferrementa "Entity Framawork Core" instalada
+
 1. Clone o repositório:
 
 ```bash
@@ -30,6 +32,7 @@ git clone https://github.com/rafaelgucky/ToDoApp.git
 ```
 cd ToDoApp/src
 dotnet restore
+dotnet ef database update
 dotnet run
 cd ../../
 cd ToDoAppFront
