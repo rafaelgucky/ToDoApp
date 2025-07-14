@@ -29,4 +29,8 @@
     <Folder Include="Data\Images\Users\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoApp.Entities\ToDoApp.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
