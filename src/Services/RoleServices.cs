@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoApp.Data;
-using ToDoApp.Migrations;
-using ToDoApp.Models;
+using ToDoApp.Entities.Models;
 
 namespace ToDoApp.Services
 {

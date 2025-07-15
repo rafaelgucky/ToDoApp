@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.OpenApi.Models;
-using System.Reflection.Metadata;
 using Microsoft.IdentityModel.Tokens;
 using ToDoApp.Data;
-using ToDoApp.Mapping;
+using ToDoApp.Entities.Mapping;
 using ToDoApp.Services;
 using System.Text;
 

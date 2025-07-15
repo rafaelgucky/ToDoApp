@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SQLitePCL;
-using ToDoApp.DTOs.TokenDTO;
-using ToDoApp.DTOs.UserDTOs;
-using ToDoApp.Mapping;
-using ToDoApp.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ToDoApp.Entities.DTOs.TokenDTO;
+using ToDoApp.Entities.DTOs.UserDTOs;
+using ToDoApp.Entities.Mapping;
+using ToDoApp.Entities.Models;
 using ToDoApp.Services;
 
 namespace ToDoApp.Controllers

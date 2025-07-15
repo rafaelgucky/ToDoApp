@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ToDoApp.Data;
-using ToDoApp.Models;
+using ToDoApp.Entities.Models;
 
 namespace ToDoApp.Services
 {

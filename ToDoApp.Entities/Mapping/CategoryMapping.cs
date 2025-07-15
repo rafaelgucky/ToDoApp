@@ -15,12 +15,13 @@ namespace ToDoApp.Entities.Mapping
                 Id = category.Id,
                 Name = category.Name,
                 Description = category.Description,
-                HexadecimalColor = category.HexadecimalColor
+                HexadecimalColor = category.HexadecimalColor ?? ""
             };
         }
 
         public IEnumerable<ReadCategoryDTO>ToReadCategoryDto(IEnumerable<Category>? categories)
         {
+            if (categories == null) return Enumerable.Empty<ReadCategoryDTO>();
             List<ReadCategoryDTO> dtos = new List<ReadCategoryDTO>();
             foreach (var category in categories)
             {
@@ -29,7 +30,7 @@ namespace ToDoApp.Entities.Mapping
                     Id = category.Id,
                     Name = category.Name,
                     Description = category.Description,
-                    HexadecimalColor = category.HexadecimalColor
+                    HexadecimalColor = category.HexadecimalColor ?? ""
                 });
             }
             return dtos;           

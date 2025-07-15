@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.ComponentModel;
 using ToDoApp.Data;
-using ToDoApp.Models;
+using ToDoApp.Entities.Models;
 
 namespace ToDoApp.Services
 {

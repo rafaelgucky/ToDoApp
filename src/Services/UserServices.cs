@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using ToDoApp.Data;
-using ToDoApp.DTOs.UserDTOs;
-using ToDoApp.Models;
+using ToDoApp.Entities.DTOs.UserDTOs;
+using ToDoApp.Entities.Models;
 
 namespace ToDoApp.Services
 {
